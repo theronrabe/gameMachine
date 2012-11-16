@@ -101,13 +101,12 @@ void drawPrimitive(Instance *I, char glType, int first, int count) {
 }
 
 GLuint newImage(char *fn) {
-	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
+	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, 0);
 	return ret;
 }
 
 void drawImage(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {
 	glBindTexture(GL_TEXTURE_2D, image);
-
 	glPushMatrix();
 	glTranslatef(x1,y1,z1);
 	glRotatef(rotation, 0,0,1);

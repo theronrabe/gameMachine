@@ -9,8 +9,6 @@ events.c
 int main(int argc, char **argv) {
 	//Graphics Stuff
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
-	glEnable(GL_TEXTURE_2D);
 
 	//Framework Stuff
 	createHeadInst();
@@ -25,6 +23,11 @@ int main(int argc, char **argv) {
 
 	//Aaaaand... we're off!
 	loadShaders("gameMachine/vertShader", "gameMachine/fragShader");
+	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glutMainLoop();
 
 	return 0;

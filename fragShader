@@ -1,6 +1,13 @@
+/*
 in vec3 o_color;
-out vec4 f_color;
+out vec3 f_color;
+*/
+
+uniform sampler2D tex;
 
 void main() {
-	f_color = vec4(o_color, 1.0);
+	//f_color = vec4(1,0,0,1);
+
+	vec4 color = texture2D(tex, gl_TexCoord[0].st);
+	gl_FragColor = color;
 }

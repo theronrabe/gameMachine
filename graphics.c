@@ -105,10 +105,23 @@ GLuint newImage(char *fn) {
 	return ret;
 }
 
-void drawImage(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2) {
+void drawImage(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {
 	glBindTexture(GL_TEXTURE_2D, image);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCos);
-	glDrawArrays(GL_QUADS, 0, 4);
+
+	glPushMatrix();
+	glTranslatef(x1,y1,z1);
+	glRotatef(rotation, 0,0,1);
+	glBegin(GL_QUADS);
+		glTexCoord2i(0,0);
+		glVertex3i(0,0,0);
+		glTexCoord2i(0,1);
+		glVertex3i(0,y2-y1,0);
+		glTexCoord2i(1,1);
+		glVertex3i(x2-x1,y2-y1,z2-z1);
+		glTexCoord2i(1,0);
+		glVertex3i(x2-x1,0,z2-z1);
+	glEnd();
+	glPopMatrix();
 }
 
 void drawPrimitiveAt(Instance *i, char glType, float x, float y, float z, float scale, float rotation, int first, int count) {

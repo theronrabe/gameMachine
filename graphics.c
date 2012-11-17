@@ -6,6 +6,9 @@ graphics.c
 */
 GLuint _V,_F,_P;
 
+GLfloat VS[] = {-1,-1,0, 1,-1,0, 1,1,0, -1,1,0};
+GLfloat TS[] = {0,0, 1,0, 1,1, 0,1};
+
 void loadShaders(char *vertShader, char *fragShader) {
 	char *vs = NULL,*fs = NULL;
 
@@ -31,11 +34,15 @@ void loadShaders(char *vertShader, char *fragShader) {
         glAttachShader(_P,_F);
         glAttachShader(_P,_V);
 
+	/*
 	glBindAttribLocation(_P, 0, "position");
 	glBindAttribLocation(_P, 1, "color");
+	*/
 
         glLinkProgram(_P);
         glUseProgram(_P);
+	
+	buildPrimitive();
 }
 
 void createWindow(char *title, int x, int y, int w, int h) {
@@ -56,34 +63,20 @@ void seeWorld3D(int cx, int cy, int cz, int fx, int fy, int fz, int vx, int vy, 
 	gluLookAt(cx, cy, cz, fx, fy, fz, vx, vy, vz);
 }
 
-void buildPrimitive(Instance *I, int size) {
-	Object *obj = getObject(I);
-	GLuint *VAO = I->VAO, *VBO = I->VBO;
+void buildPrimitive() {
+	_SAMPLER_LOC = glGetUniformLocation(_P, "tex");
 	
-	glGenVertexArrays(1, &VAO[0]);
-	glBindVertexArray(VAO[0]);
-	glGenBuffers(2,VBO);
+	glGenVertexArrays(1, &_VAO[0]);
+	glBindVertexArray(_VAO[0]);
+	glGenBuffers(2,_VBO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, 3*size*sizeof(GLfloat), obj->Port[dock_vertices], GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, _VBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, 8*sizeof(GLfloat), _PRIM, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 16, 0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-	glBufferData(GL_ARRAY_BUFFER, 3*size*sizeof(GLfloat), obj->Port[dock_colors], GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, 0, 0);
-	glEnableVertexAttribArray(1);
-
-	/*
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLint), obj->Port[dock_textured], GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 1, GL_INT, GL_FALSE, 0, 0);
-	*/
-
-	/*
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCos);
-	*/
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 16, (void*)(sizeof(float)*2));
+	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
 }
@@ -91,6 +84,7 @@ void buildPrimitive(Instance *I, int size) {
 void drawPrimitive(Instance *I, char glType, int first, int count) {
 	GLuint *VAO = I->VAO;
 	glBindVertexArray(VAO[0]);
+	glBindTexture(GL_TEXTURE_2D, I->A);
 	glPushMatrix();
 		glTranslatef(I->X, I->Y, I->Z);
 		glRotatef(I->rotation, 0,0,1);
@@ -105,7 +99,21 @@ GLuint newImage(char *fn) {
 	return ret;
 }
 
-void drawImage(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {
+void drawImage(GLuint image, int x1, int y1, int width, int height, float rotation) {
+	glBindVertexArray(_VAO[0]);
+	glUniform1i(_SAMPLER_LOC, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, image);
+
+	glPushMatrix();
+	glTranslatef(x1,y1,0);
+	glRotatef(rotation, 0,0,1);
+	glScalef(width, height, 1);
+	glDrawArrays(GL_QUADS, 0, 4);
+	glPopMatrix();
+}
+
+void drawImagePoints(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {
 	glBindTexture(GL_TEXTURE_2D, image);
 	glPushMatrix();
 	glTranslatef(x1,y1,z1);
@@ -122,7 +130,6 @@ void drawImage(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, flo
 	glEnd();
 	glPopMatrix();
 }
-
 void drawPrimitiveAt(Instance *i, char glType, float x, float y, float z, float scale, float rotation, int first, int count) {
 	GLuint *VAO = i->VAO;
 	glBindVertexArray(VAO[0]);

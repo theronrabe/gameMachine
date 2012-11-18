@@ -3,8 +3,8 @@
 #include <GL/glut.h>
 //Drawing Structures 
 struct _VERTEX { float x,y,s,t; };
-struct _VERTEX _PRIM[] = {-1,-1,0,0, -1,1,0,1, 1,1,1,1, 1,-1,1,0};
-GLuint _VAO[1], _VBO[1];
+struct _VERTEX _PRIM[] = {-1,-1,0,0, 1,-1,1,0, 1,1,1,1, -1,1,0,1};
+GLuint _VAO[2], _VBO[2];
 GLint _SAMPLER_LOC;
 
 //Framework Functions

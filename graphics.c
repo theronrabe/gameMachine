@@ -6,9 +6,6 @@ graphics.c
 */
 GLuint _V,_F,_P;
 
-GLfloat VS[] = {-1,-1,0, 1,-1,0, 1,1,0, -1,1,0};
-GLfloat TS[] = {0,0, 1,0, 1,1, 0,1};
-
 void loadShaders(char *vertShader, char *fragShader) {
 	char *vs = NULL,*fs = NULL;
 
@@ -35,14 +32,14 @@ void loadShaders(char *vertShader, char *fragShader) {
         glAttachShader(_P,_V);
 
 	/*
-	glBindAttribLocation(_P, 0, "position");
-	glBindAttribLocation(_P, 1, "color");
+	glBindAttribLocation(_P, 0, "in_Position");
+	glBindAttribLocation(_P, 1, "in_TexCoord0");
 	*/
 
         glLinkProgram(_P);
         glUseProgram(_P);
 	
-	buildPrimitive();
+	//buildPrimitive();
 }
 
 void createWindow(char *title, int x, int y, int w, int h) {
@@ -64,21 +61,21 @@ void seeWorld3D(int cx, int cy, int cz, int fx, int fy, int fz, int vx, int vy, 
 }
 
 void buildPrimitive() {
-	_SAMPLER_LOC = glGetUniformLocation(_P, "tex");
-	
 	glGenVertexArrays(1, &_VAO[0]);
 	glBindVertexArray(_VAO[0]);
-	glGenBuffers(2,_VBO);
+	glGenBuffers(1,_VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, _VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, 8*sizeof(GLfloat), _PRIM, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4*4*sizeof(GLfloat), _PRIM, GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 16, 0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 16, (void*)(sizeof(float)*2));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 16, (void*)(sizeof(float)*2));
+	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
+	_SAMPLER_LOC = glGetUniformLocation(_P, "baseMap");
 }
 
 void drawPrimitive(Instance *I, char glType, int first, int count) {
@@ -95,7 +92,7 @@ void drawPrimitive(Instance *I, char glType, int first, int count) {
 }
 
 GLuint newImage(char *fn) {
-	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, 0);
+	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
 	return ret;
 }
 
@@ -111,6 +108,8 @@ void drawImage(GLuint image, int x1, int y1, int width, int height, float rotati
 	glScalef(width, height, 1);
 	glDrawArrays(GL_QUADS, 0, 4);
 	glPopMatrix();
+
+	glBindVertexArray(0);
 }
 
 void drawImagePoints(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {

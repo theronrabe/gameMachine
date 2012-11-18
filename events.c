@@ -56,6 +56,8 @@ void Draw(int x) {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+	triggerEvent(onDraw, GAME.headInst);
+	glutSwapBuffers();
 
 	Instance *i = GAME.headInst->NEXT;
 	while(i) {
@@ -63,8 +65,6 @@ void Draw(int x) {
 		i->Y += i->yVelocity;
 		i = i->NEXT;
 	}
-	triggerEvent(onDraw, GAME.headInst);
-	glutSwapBuffers();
 }
 
 void KeyUp(unsigned char key, int x, int y) {

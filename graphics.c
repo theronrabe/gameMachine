@@ -35,6 +35,12 @@ void loadShaders(char *vertShader, char *fragShader) {
         glUseProgram(_P);
 	
 	buildPrimitive();
+
+	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH|GLUT_STENCIL);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void createWindow(char *title, int x, int y, int w, int h) {

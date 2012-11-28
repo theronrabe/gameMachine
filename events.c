@@ -24,11 +24,6 @@ int main(int argc, char **argv) {
 
 	//Aaaaand... we're off!
 	loadShaders("gameMachine/vertShader", "gameMachine/fragShader");
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH|GLUT_STENCIL);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glutMainLoop();
 
 	return 0;
@@ -60,21 +55,16 @@ void Draw() {
 	glFlush();
 	glutSwapBuffers();
 	
-	//if(flagDraw) {
-		Instance *i = GAME.headInst->NEXT;
-		while(i) {
-			i->X += i->xVelocity;
-			i->Y += i->yVelocity;
-			i = i->NEXT;
-		}
-	//}
-	flagDraw = 0;
+	Instance *i = GAME.headInst->NEXT;
+	while(i) {
+		i->X += i->xVelocity;
+		i->Y += i->yVelocity;
+		i = i->NEXT;
+	}
 }
 
 void FPS(int x) {
 	glutTimerFunc(GAME.FRAMERATE, FPS, 0);
-	//flagDraw = 1;
-	//triggerEvent(onIdle, GAME.headInst);
 	glutPostRedisplay();
 }
 

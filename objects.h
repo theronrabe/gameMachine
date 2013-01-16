@@ -5,6 +5,7 @@ void destroyInstance(Instance *id);
 void destroyObject(Object *obj);
 void triggerEvent(Script (*E)(Object *obj), Instance *i);
 void cleanUpInstances();
+int countInstances(Object *o);
 void wipeInstances(Object *o);
 void cleanUpObjects();
 Object *getObject(Instance *I);

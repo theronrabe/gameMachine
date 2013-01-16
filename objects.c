@@ -90,6 +90,16 @@ void cleanUpInstances() {
 	}
 }
 
+int countInstances(Object *o) {
+	Instance *i = GAME.headInst;
+	int ret = 0;
+	while(i) {
+		ret += (i->OBJ == o)?1:0;
+		i = i->NEXT;
+	}
+	return ret;
+}
+
 void wipeInstances(Object *o) {
 	Instance *i = GAME.headInst->NEXT;
 	while(i) {

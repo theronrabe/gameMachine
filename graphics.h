@@ -1,15 +1,13 @@
-<<<<<<< HEAD
 #ifndef _graphics.h_
 #define _graphics.h_
 
 //Drawing Structures 
 struct _VERTEX { float x,y,s,t; };
 extern struct _VERTEX _PRIM[];
-=======
+
 //Drawing Structures 
-struct _VERTEX { float x,y,s,t; };
-struct _VERTEX _PRIM[] = {-1,-1,0,0, 1,-1,1,0, 1,1,1,1, -1,1,0,1};
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
+//struct _VERTEX { float x,y,s,t; };
+//struct _VERTEX _PRIM[] = {-1,-1,0,0, 1,-1,1,0, 1,1,1,1, -1,1,0,1};
 GLuint _VAO[2], _VBO[2];
 GLint _SAMPLER_LOC;
 
@@ -24,8 +22,5 @@ void drawImage(GLuint Image, int x1, int y1, int width, int height, float rotati
 void drawImagePoints(GLuint Image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation);
 void buildPrimitive();
 GLuint newImage(char *file);
-<<<<<<< HEAD
 
 #endif
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a

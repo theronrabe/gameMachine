@@ -6,10 +6,7 @@ objects.c
 	as well handling the data structures used by those functions.
 */
 
-<<<<<<< HEAD
 #include <game.h>
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 
 Object* createObject() {
 	Object *newObj = malloc(sizeof(Object));
@@ -20,10 +17,6 @@ Object* createObject() {
 	newObj->onKeyDown = NULL;
 	newObj->onMouseLeft = NULL;
 	newObj->onMouseRight = NULL;
-<<<<<<< HEAD
- 
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 	newObj->onDestroy = NULL;
 	newObj->onIdle = NULL;
 
@@ -35,10 +28,7 @@ Object* createObject() {
 Instance* createInstance(Object *obj, int dataSize, int x, int y, int z, float direction, float velocity) {
 	int size = sizeof(Instance);
 	Instance *newInst = (Instance *) malloc(sizeof(Instance));
-<<<<<<< HEAD
 	if(!newInst) exit(1);
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 	Instance *i = GAME.headInst, *n = GAME.headInst->NEXT;
 
 	newInst->OBJ = obj;
@@ -54,24 +44,18 @@ Instance* createInstance(Object *obj, int dataSize, int x, int y, int z, float d
 	newInst->scale = 1;
 	
 	while(i){
-<<<<<<< HEAD
-		if(newInst->id <= i->id) {
-=======
-		if(GAME.instCount <= i->id) {
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
-			newInst->NEXT = i;
-			n = i->PREV;
-			n->NEXT = newInst;
-			newInst->PREV = n;
-			i->PREV = newInst;
-			break;
-		} else {
-			i = i->NEXT;
-		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
+		//if(newInst->id <= i->id) {
+			if(GAME.instCount <= i->id) {
+				newInst->NEXT = i;
+				n = i->PREV;
+				n->NEXT = newInst;
+				newInst->PREV = n;
+				i->PREV = newInst;
+				break;
+			} else {
+				i = i->NEXT;
+			}
+		//}
 	}
 	++GAME.instCount;
 	
@@ -89,11 +73,8 @@ void destroyInstance(Instance *id) {
 
 	if(id->DATA) free(id->DATA);
 	if(id) free(id);
-<<<<<<< HEAD
 
 	GAME.instCount--;
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 }
 
 void triggerEvent(Script (*E)(Object *obj), Instance *i) { //Takes E as a pointer to a function that returns a Script.
@@ -115,8 +96,6 @@ void cleanUpInstances() {
 	}
 }
 
-<<<<<<< HEAD
-=======
 int countInstances(Object *o) {
 	Instance *i = GAME.headInst;
 	int ret = 0;
@@ -127,7 +106,6 @@ int countInstances(Object *o) {
 	return ret;
 }
 
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 void wipeInstances(Object *o) {
 	Instance *i = GAME.headInst->NEXT;
 	while(i) {
@@ -169,7 +147,6 @@ char instanceExists(Object *obj) {
 }
 
 Instance *nearInstance(Instance *this, Object *obj) {
-<<<<<<< HEAD
 	Instance *i = GAME.headInst, *ret = NULL;
 	float n=999999, in;
 
@@ -180,16 +157,6 @@ Instance *nearInstance(Instance *this, Object *obj) {
 				n = in;
 				ret = i;
 			}
-=======
-	Instance *i = GAME.headInst, *ret = i;
-	float n=999999, in;
-
-	while(i) {
-		in = distanceSq(this->X, this->Y, i->X, i->Y);
-		if(in<n) {
-			n = in;
-			ret = i;
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 		}
 		i = i->NEXT;
 	}

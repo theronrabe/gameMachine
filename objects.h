@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 #ifndef _objects.h_
 #define _objects.h_
 
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 //Object/Instance Functions
 Object* createObject();
 Instance* createInstance(Object *obj, int dataSize, int x, int y, int z, float direction, float velocity);
@@ -11,10 +8,7 @@ void destroyInstance(Instance *id);
 void destroyObject(Object *obj);
 void triggerEvent(Script (*E)(Object *obj), Instance *i);
 void cleanUpInstances();
-<<<<<<< HEAD
-=======
 int countInstances(Object *o);
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 void wipeInstances(Object *o);
 void cleanUpObjects();
 Object *getObject(Instance *I);
@@ -45,8 +39,5 @@ typedef enum {
 	dock_1,
 	dock_0
 } Dock;
-<<<<<<< HEAD
 
 #endif
-=======
->>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a

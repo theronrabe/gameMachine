@@ -4,6 +4,13 @@ Theron Rabe
 graphics.c
 	This file takes defines any functions that either interact with OpenGL, or user-oriented graphics functions.
 */
+<<<<<<< HEAD
+
+#include <game.h>
+
+struct _VERTEX _PRIM[] = {-1,-1,0,0, 1,-1,1,0, 1,1,1,1, -1,1,0,1};
+=======
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 GLuint _V,_F,_P;
 
 void loadShaders(char *vertShader, char *fragShader) {
@@ -35,12 +42,15 @@ void loadShaders(char *vertShader, char *fragShader) {
         glUseProgram(_P);
 	
 	buildPrimitive();
+<<<<<<< HEAD
+=======
 
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH|GLUT_STENCIL);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 }
 
 void createWindow(char *title, int x, int y, int w, int h) {
@@ -80,7 +90,11 @@ void buildPrimitive() {
 }
 
 GLuint newImage(char *fn) {
+<<<<<<< HEAD
+	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS|SOIL_FLAG_POWER_OF_TWO);
+=======
 	GLuint ret = SOIL_load_OGL_texture(fn, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 	return ret;
 }
 
@@ -101,6 +115,10 @@ void drawImage(GLuint image, int x1, int y1, int width, int height, float rotati
 }
 
 void drawImagePoints(GLuint image, int x1, int y1, int z1, int x2, int y2, int z2, float rotation) {
+<<<<<<< HEAD
+	/*
+=======
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 	glBindTexture(GL_TEXTURE_2D, image);
 	glPushMatrix();
 	glTranslatef(x1,y1,z1);
@@ -116,4 +134,8 @@ void drawImagePoints(GLuint image, int x1, int y1, int z1, int x2, int y2, int z
 		glVertex3i(x2-x1,0,z2-z1);
 	glEnd();
 	glPopMatrix();
+<<<<<<< HEAD
+	*/
+=======
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 }

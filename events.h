@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+#ifndef _events.h_
+#define _events.h_
+
+=======
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
 //Natural Events
 void Draw();
 void Step();
@@ -17,3 +23,8 @@ Script onDestroy(Object *obj);
 Script onMouseLeft(Object *obj);
 Script onMouseRight(Object *obj);
 Script onIdle(Object *obj);
+<<<<<<< HEAD
+
+#endif
+=======
+>>>>>>> 0c130a3d454dd197adecb20ae56faedd74e4f93a
